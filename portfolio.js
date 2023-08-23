@@ -19,12 +19,30 @@ function mobileNavToggle(symbol, btnTogggle, nav) {
   });
 }
 
+function navScrollTo(links) {
+  links.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      const target = document.querySelector(link.getAttribute("href"));
+      if (target) {
+        // Use the scrollTo API for smooth scrolling
+        window.scrollTo({
+          top: target.offsetTop,
+          behavior: "smooth",
+        });
+      }
+    });
+  });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   const toggleModeBtn = document.querySelector(".toggleBtn");
   const navBtn = document.querySelectorAll(".navB");
   const navTogg = document.querySelector(".navTogg");
   const dismissBtn = document.querySelector(".dismiss");
   const navDisp = document.querySelector(".navBar");
+  const navLink = document.querySelectorAll(".navLink");
   modeToggle(toggleModeBtn, navBtn, navTogg);
   mobileNavToggle(dismissBtn, navDisp, navTogg);
+  navScrollTo(navLink);
 });
