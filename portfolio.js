@@ -48,14 +48,19 @@ const projectFive = {
   techStack: ["HTML", "Tailwind CSS", "JavaScript"],
 };
 
-function modeToggle(btn, navBar, navTogg) {
-  btn.addEventListener("click", () => {
-    document.body.classList.toggle("bg-slate-900");
-    navTogg.classList.toggle("bg-slate-900");
-    document.body.classList.toggle("text-white");
-    navBar.forEach((div) => {
-      div.classList.toggle("bg-slate-800");
-      div.classList.toggle("bg-slate-100");
+function modeToggle(btn, navBar, navTogg, togglBtn) {
+  btn.forEach((img) => {
+    img.addEventListener("click", () => {
+      document.body.classList.toggle("bg-slate-900");
+      navTogg.classList.toggle("bg-slate-900");
+      document.body.classList.toggle("text-white");
+      navBar.forEach((div) => {
+        div.classList.toggle("bg-slate-800");
+        div.classList.toggle("bg-slate-100");
+      });
+      togglBtn.forEach((btn) => {
+        btn.classList.toggle("hidden");
+      });
     });
   });
 }
@@ -210,7 +215,7 @@ function projectUpdate(parentSect, project, isImagefirst) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  const toggleModeBtn = document.querySelector(".toggleBtn");
+  const toggleModeBtn = document.querySelectorAll(".toggleBtn");
   const navBtn = document.querySelectorAll(".navB");
   const navTogg = document.querySelector(".navTogg");
   const dismissBtn = document.querySelector(".dismiss");
@@ -224,7 +229,7 @@ document.addEventListener("DOMContentLoaded", function () {
   projectUpdate(projectSect, projectFour, true);
   projectUpdate(projectSect, projectFive, false);
 
-  modeToggle(toggleModeBtn, navBtn, navTogg);
+  modeToggle(toggleModeBtn, navBtn, navTogg, toggleModeBtn);
   mobileNavToggle(dismissBtn, navDisp, navTogg);
   navScrollTo(navLink);
 });
