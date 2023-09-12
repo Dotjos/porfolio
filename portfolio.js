@@ -39,7 +39,7 @@ const projectFour = {
 };
 
 const projectFive = {
-  imgSource: "./img/Grill.jpg",
+  imgSource: "./img/gril.jpg",
   projectTitle: "A GRILL COMPANY LANDING PAGE",
   projectText:
     "A fully responsive grilling landing page tailored for passionate grill spot owners.This landing page showcases a mouthwatering array of food items with their respective prices.The delivery service system with respect to the company's terms and condition.",
