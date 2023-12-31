@@ -18,16 +18,6 @@ const projecTwo = {
   techStack: ["HTML", "Tailwind CSS", "JavaScript"],
 };
 
-const projecThree = {
-  imgSource: "./img/Motivation.jpg",
-  projectTitle: "AN ADVICE GENERATOR",
-  projectText:
-    "This is a simple yet effective tool designed to provide you with a dose of motivation and wisdom whenever you need it. This web app randomly generates motivational quotes and words of wisdom with just a click on the dice image.",
-  liveLink: "https://advice-generator-omega-ten.vercel.app/",
-  gitHubRepo: "https://github.com/Dotjos/Advice-generator",
-  techStack: ["HTML", "Tailwind CSS", "JavaScript"],
-};
-
 const projectFour = {
   imgSource: "./img/Flag.jpg",
   projectTitle: "COUNTRICTIONARY",
@@ -35,16 +25,6 @@ const projectFour = {
     "This web app is designed for discovering fascinating facts and information about countries from around the world.This app makes it possible to  explore the globe, filter the various countries of the world by region , discover bordering nations among other features just by clicking on various visual buttons displayed on the screen.",
   liveLink: "https://rest-countries-api-five-pearl.vercel.app/",
   gitHubRepo: "https://github.com/Dotjos/rest-countries-api",
-  techStack: ["HTML", "Tailwind CSS", "JavaScript"],
-};
-
-const projectFive = {
-  imgSource: "./img/gril.jpg",
-  projectTitle: "A GRILL COMPANY LANDING PAGE",
-  projectText:
-    "A fully responsive grilling landing page tailored for passionate grill spot owners.This landing page showcases a mouthwatering array of food items with their respective prices.The delivery service system with respect to the company's terms and condition.",
-  liveLink: "https://grill-landing-page.vercel.app/",
-  gitHubRepo: "https://github.com/Dotjos/Grill-landing-page",
   techStack: ["HTML", "Tailwind CSS", "JavaScript"],
 };
 
@@ -148,7 +128,8 @@ function projectUpdate(parentSect, project, isImagefirst) {
     "border-2",
     "my-3",
     "lg:flex",
-    "lg:justify-around"
+    "lg:justify-around",
+    "project"
   );
 
   imgEl.classList.add("w-full");
@@ -170,7 +151,6 @@ function projectUpdate(parentSect, project, isImagefirst) {
       "lg:p-3",
       "lg:mt-auto",
       "lg:mb-auto",
-
       "lg:order-2"
     );
   } else {
@@ -221,15 +201,25 @@ document.addEventListener("DOMContentLoaded", function () {
   const dismissBtn = document.querySelector(".dismiss");
   const navDisp = document.querySelector(".navBar");
   const navLink = document.querySelectorAll(".navLink");
-  const projectSect = document.querySelector("#project");
-
+  const projectSect = document.querySelector("#projects");
   projectUpdate(projectSect, projectOne, false);
   projectUpdate(projectSect, projecTwo, true);
-  projectUpdate(projectSect, projecThree, false);
-  projectUpdate(projectSect, projectFour, true);
-  projectUpdate(projectSect, projectFive, false);
-
+  projectUpdate(projectSect, projectFour, false);
   modeToggle(toggleModeBtn, navBtn, navTogg, toggleModeBtn);
   mobileNavToggle(dismissBtn, navDisp, navTogg);
   navScrollTo(navLink);
 });
+
+window.onload = function () {
+  const projects = document.querySelectorAll(".project");
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      entry.target.classList.toggle("fade-in", entry.isIntersecting);
+      if (entry.isIntersecting) observer.unobserve(entry.target);
+    });
+  });
+
+  projects.forEach((project) => {
+    observer.observe(project);
+  });
+};
