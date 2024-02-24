@@ -1,4 +1,14 @@
 const projectOne = {
+  imgSource: "./img/link-sharing-app.png",
+  projectTitle: "A LINK SHARING APP",
+  projectText:
+    "Users can bring all of their different works and projects that are hosted on different platforms to ONE PLACE and share them using ONE LINK by using this link sharing app, which is a full-stack application.",
+  liveLink: "https://link-sharing-app-delta.vercel.app/",
+  gitHubRepo: "https://github.com/Dotjos/link-sharing-app",
+  techStack: ["React","Tailwind CSS","Supabase"],
+};
+
+const projecTwo = {
   imgSource: "./img/Multi-conf.jpg",
   projectTitle: "A MULTI STEP FORM",
   projectText:
@@ -8,7 +18,7 @@ const projectOne = {
   techStack: ["HTML", "Tailwind CSS", "JavaScript"],
 };
 
-const projecTwo = {
+const projecThree = {
   imgSource: "./img/Location.jpg",
   projectTitle: "IP ADDRESS GENERATOR",
   projectText:
@@ -204,7 +214,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const projectSect = document.querySelector("#projects");
   projectUpdate(projectSect, projectOne, false);
   projectUpdate(projectSect, projecTwo, true);
-  projectUpdate(projectSect, projectFour, false);
+  projectUpdate(projectSect, projecThree, false);
+  projectUpdate(projectSect, projectFour, true);
   modeToggle(toggleModeBtn, navBtn, navTogg, toggleModeBtn);
   mobileNavToggle(dismissBtn, navDisp, navTogg);
   navScrollTo(navLink);
