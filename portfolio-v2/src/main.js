@@ -1,3 +1,4 @@
+
 const projectOne = {
   imgSource: "./img/link-sharing-app.png",
   projectTitle: "A LINK SHARING APP",
@@ -234,3 +235,4 @@ window.onload = function () {
     observer.observe(project);
   });
 };
+
