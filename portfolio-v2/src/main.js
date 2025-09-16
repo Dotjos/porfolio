@@ -1,3 +1,68 @@
+const scrollableColumn= document.querySelector(".scrollable")
+
+function setupScrolling(){
+  if (window.innerWidth >= 1024) {
+
+    document.body.style.overflow = 'hidden';
+
+    window.removeEventListener("wheel",handleWheel)
+    window.removeEventListener("keydown",handleKeydown)
+
+    window.addEventListener("wheel",handleWheel,{passive:false})
+    window.addEventListener("keydown",handleKeydown)    
+  } else {
+    document.body.style.overflow="auto"
+
+    window.removeEventListener("wheel",handleWheel)
+    window.removeEventListener("keydown",handleKeydown)
+  }
+}
+
+function handleWheel(){
+  window.addEventListener('wheel', function(e) {
+    e.preventDefault();
+    
+    // Get scroll direction and amount
+    const deltaY = e.deltaY;
+    
+    // Apply scroll to the scrollable column
+    scrollableColumn.scrollTop += deltaY;
+  });
+}
+function handleKeydown(){
+  window.addEventListener('keydown', function(e) {
+    const scrollAmount = 50;
+    
+    switch(e.key) {
+        case 'ArrowDown':
+            e.preventDefault();
+            scrollableColumn.scrollTop += scrollAmount;
+            break;
+        case 'ArrowUp':
+            e.preventDefault();
+            scrollableColumn.scrollTop -= scrollAmount;
+            break;
+        case 'PageDown':
+            e.preventDefault();
+            scrollableColumn.scrollTop += scrollableColumn.clientHeight * 0.8;
+            break;
+        case 'PageUp':
+            e.preventDefault();
+            scrollableColumn.scrollTop -= scrollableColumn.clientHeight * 0.8;
+            break;
+        case 'Home':
+            e.preventDefault();
+            scrollableColumn.scrollTop = 0;
+            break;
+        case 'End':
+            e.preventDefault();
+            scrollableColumn.scrollTop = scrollableColumn.scrollHeight;
+            break;
+    }
+  });
+}
+
+
 const projectOne = {
   imgSource: "./img/link-sharing-app.png",
   projectTitle: "A LINK SHARING APP",
@@ -37,48 +102,6 @@ const projectFour = {
   gitHubRepo: "https://github.com/Dotjos/rest-countries-api",
   techStack: ["HTML", "Tailwind CSS", "JavaScript"],
 };
-
-function modeToggle(btn, navBar, navTogg, togglBtn) {
-  btn.forEach((img) => {
-    img.addEventListener("click", () => {
-      document.body.classList.toggle("bg-slate-900");
-      navTogg.classList.toggle("bg-slate-900");
-      document.body.classList.toggle("text-white");
-      navBar.forEach((div) => {
-        div.classList.toggle("bg-slate-800");
-        div.classList.toggle("bg-slate-100");
-      });
-      togglBtn.forEach((btn) => {
-        btn.classList.toggle("hidden");
-      });
-    });
-  });
-}
-
-function mobileNavToggle(symbol, btnTogggle, nav) {
-  btnTogggle.addEventListener("click", () => {
-    nav.classList.remove("hidden");
-  });
-  symbol.addEventListener("click", () => {
-    nav.classList.add("hidden");
-  });
-}
-
-function navScrollTo(links) {
-  links.forEach((link) => {
-    link.addEventListener("click", (event) => {
-      event.preventDefault();
-      const target = document.querySelector(link.getAttribute("href"));
-      if (target) {
-        // Use the scrollTo API for smooth scrolling
-        window.scrollTo({
-          top: target.offsetTop,
-          behavior: "smooth",
-        });
-      }
-    });
-  });
-}
 
 function projectUpdate(parentSect, project, isImagefirst) {
   const {
@@ -142,13 +165,12 @@ function projectUpdate(parentSect, project, isImagefirst) {
     "project"
   );
 
-  imgEl.classList.add("w-full");
+  imgEl.classList.add("w-full", "h-full");
+  imgDiv.classList.add("h-45","lg:h-96")
   txtDescDiv.classList.add("my-3", "lg:my-0");
 
   if (isImagefirst) {
     imgDiv.classList.add(
-      "h-64",
-      "lg:h-96",
       "overflow-hidden",
       "lg:w-2/5",
       "lg:order-1"
@@ -165,8 +187,6 @@ function projectUpdate(parentSect, project, isImagefirst) {
     );
   } else {
     imgDiv.classList.add(
-      "h-64",
-      "lg:h-96",
       "overflow-hidden",
       "lg:w-2/5",
       "lg:order-2"
@@ -197,28 +217,17 @@ function projectUpdate(parentSect, project, isImagefirst) {
   txtDiv.appendChild(txtLiveDiv);
   txtDiv.appendChild(txtGithubDiv);
   txtDiv.appendChild(txtStackDiv);
-
   productDiv.appendChild(imgDiv);
   productDiv.appendChild(txtDiv);
-
   parentSect.appendChild(productDiv);
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  const toggleModeBtn = document.querySelectorAll(".toggleBtn");
-  const navBtn = document.querySelectorAll(".navB");
-  const navTogg = document.querySelector(".navTogg");
-  const dismissBtn = document.querySelector(".dismiss");
-  const navDisp = document.querySelector(".navBar");
-  const navLink = document.querySelectorAll(".navLink");
-  const projectSect = document.querySelector("#projects");
+  const projectSect = document.querySelector(".project");
   projectUpdate(projectSect, projectOne, false);
   projectUpdate(projectSect, projecTwo, true);
   projectUpdate(projectSect, projecThree, false);
   projectUpdate(projectSect, projectFour, true);
-  modeToggle(toggleModeBtn, navBtn, navTogg, toggleModeBtn);
-  mobileNavToggle(dismissBtn, navDisp, navTogg);
-  navScrollTo(navLink);
 });
 
 window.onload = function () {
@@ -234,3 +243,7 @@ window.onload = function () {
     observer.observe(project);
   });
 };
+
+
+
+
