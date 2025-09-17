@@ -154,11 +154,11 @@ function projectUpdate(parentSect, project, isImagefirst) {
 
   // Add CSS classes
   productDiv.classList.add(
-    "border",
-    "p-3",
+    // "border",
+    // "p-3",
     "rounded-md",
     "border-slate-800",
-    "border-2",
+    // "border-2",
     "my-3",
     "lg:flex",
     "lg:justify-around",
