@@ -103,7 +103,7 @@ const projectFour = {
   techStack: ["HTML", "Tailwind CSS", "JavaScript"],
 };
 
-function projectUpdate(parentSect, project, isImagefirst) {
+function projectUpdate(parentSect, project) {
   const {
     imgSource,
     projectTitle,
@@ -140,70 +140,32 @@ function projectUpdate(parentSect, project, isImagefirst) {
   githubRepoLink.href = gitHubRepo;
 
   txtLiveH1.innerHTML = `
-    <h1><span class="font-medium">Live URL:</span><a class="text-blue-600 italic" href=${liveLink} target="_blank">liveURL.com</a></h1>
+    <h1 class="text-sm"><span class="font-medium">Live URL:</span><a class="text-blue-600 italic" href=${liveLink} target="_blank">liveURL.com</a></h1>
   `;
 
   txtGithubH1.innerHTML = `
-    <h1><span class="font-medium">GitHub repo:</span><a class="text-blue-600 italic"  href=${gitHubRepo} target="_blank">Github.com</a></h1>
+    <h1 class="text-sm"><span class="font-medium">GitHub repo:</span><a class="text-blue-600 italic"  href=${gitHubRepo} target="_blank">Github.com</a></h1>
   `;
 
   const stackString = techStack.join();
   txtStackH1.innerHTML = `
-    <h1><span class="font-medium">Tech stack:</span><span">${stackString}.</span></h1>
+    <h1 class="text-sm ><span class="font-medium">Tech stack:</span><span">${stackString}.</span></h1>
   `;
 
   // Add CSS classes
   productDiv.classList.add(
-    // "border",
-    // "p-3",
-    "rounded-md",
-    "border-slate-800",
-    // "border-2",
     "my-3",
-    "lg:flex",
-    "lg:justify-around",
-    "project"
+    "md:flex",
+    "md:gap-5",
+    "project",
+    "w-full",
   );
 
-  imgEl.classList.add("w-full", "h-full");
-  imgDiv.classList.add("h-45","lg:h-96")
-  txtDescDiv.classList.add("my-3", "lg:my-0");
-
-  if (isImagefirst) {
-    imgDiv.classList.add(
-      "overflow-hidden",
-      "lg:w-2/5",
-      "lg:order-1"
-    );
-    txtDiv.classList.add(
-      "mt-3",
-      "lg:mt-0",
-      "lg:w-2/5",
-      "lg:text-xl",
-      "lg:p-3",
-      "lg:mt-auto",
-      "lg:mb-auto",
-      "lg:order-2"
-    );
-  } else {
-    imgDiv.classList.add(
-      "overflow-hidden",
-      "lg:w-2/5",
-      "lg:order-2"
-    );
-    txtDiv.classList.add(
-      "mt-3",
-      "lg:mt-0",
-      "lg:w-2/5",
-      "lg:text-xl",
-      "lg:p-3",
-      "lg:mt-auto",
-      "lg:mb-auto",
-      "lg:order-1"
-    );
-  }
-
-  txtNameH1.classList.add("font-semibold");
+  imgEl.classList.add("w-full","h-full");
+  imgDiv.classList.add("h-30","lg:h-96","w-50","md:w-1/3","border-2","overflow-hidden", "rounded-md","border-gray-100","project-image","transition-all","duration-300")
+  txtDescDiv.classList.add("my-3","text-sm","lg:my-0");
+  txtNameH1.classList.add("font-semibold","text-lg");
+  txtDiv.classList.add("w-fit")
 
   // Append elements
   imgDiv.appendChild(imgEl);
@@ -224,23 +186,49 @@ function projectUpdate(parentSect, project, isImagefirst) {
 
 document.addEventListener("DOMContentLoaded", function () {
   const projectSect = document.querySelector(".project");
-  projectUpdate(projectSect, projectOne, false);
-  projectUpdate(projectSect, projecTwo, true);
-  projectUpdate(projectSect, projecThree, false);
-  projectUpdate(projectSect, projectFour, true);
+  projectUpdate(projectSect, projectOne);
+  projectUpdate(projectSect, projecTwo);
+  projectUpdate(projectSect, projecThree);
+  projectUpdate(projectSect, projectFour);
 });
 
 window.onload = function () {
   const projects = document.querySelectorAll(".project");
-  const observer = new IntersectionObserver((entries) => {
+  const projectImages = document.querySelectorAll(".project-image");
+  
+  // Observer for project fade-in animation
+  const projectObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       entry.target.classList.toggle("fade-in", entry.isIntersecting);
-      if (entry.isIntersecting) observer.unobserve(entry.target);
+      if (entry.isIntersecting) projectObserver.unobserve(entry.target);
     });
   });
 
+  // Observer for project image border animation
+  const imageObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        // Add lighter border when image comes into view
+        entry.target.classList.remove("border-gray-100");
+        entry.target.classList.add("border-gray-300", "shadow-lg");
+      } else {
+        // Revert to original border when image goes out of view
+        entry.target.classList.remove("border-red-300", "shadow-lg");
+        entry.target.classList.add("border-gray-100");
+      }
+    });
+  }, {
+    threshold: 0.3 // Trigger when 30% of the image is visible
+  });
+
+  // Observe projects for fade-in
   projects.forEach((project) => {
-    observer.observe(project);
+    projectObserver.observe(project);
+  });
+
+  // Observe project images for border animation
+  projectImages.forEach((image) => {
+    imageObserver.observe(image);
   });
 };
 
