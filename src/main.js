@@ -155,15 +155,19 @@ function projectUpdate(parentSect, project) {
   // Add CSS classes
   productDiv.classList.add(
     "my-3",
-    "md:flex",
+    "flex",
+    "gap-7",
+    "flex-col",
+    "md:flex-row",
     "md:gap-5",
     "project",
     "w-full",
+    // "hover:border"
   );
 
   imgEl.classList.add("w-full","h-full");
-  imgDiv.classList.add("h-30","lg:h-96","w-50","md:w-1/3","border-2","overflow-hidden", "rounded-md","border-gray-100","project-image","transition-all","duration-300")
-  txtDescDiv.classList.add("my-3","text-sm","lg:my-0");
+  imgDiv.classList.add("h-30","lg:h-20","w-50","md:w-1/3","border-2","overflow-hidden", "rounded-md","border-gray-100","project-image","transition-all","duration-300")
+  txtDescDiv.classList.add("text-sm","my-2","lg:my-0","text-justify");
   txtNameH1.classList.add("font-semibold","text-lg");
   txtDiv.classList.add("w-fit")
 
