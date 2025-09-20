@@ -1,3 +1,5 @@
+const sections = document.querySelectorAll("section"); // sections with ids
+const navLinks = document.querySelectorAll("nav a");
 const scrollableColumn= document.querySelector(".scrollable")
 
 function setupScrolling(){
@@ -61,6 +63,53 @@ function handleKeydown(){
     }
   });
 }
+
+
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      const id = entry.target.getAttribute("id");
+      const link = document.querySelector(`a[href="#${id}"]`);
+
+      if (entry.isIntersecting && link) {
+        // reset all lines
+        navLinks.forEach((a) => {
+          const line = a.querySelector(".line");
+          line.classList.remove("w-16")
+        });
+
+        // expand active one
+        const activeLine = link.querySelector(".line");
+        if (activeLine) {
+          activeLine.classList.add("w-16") // expanded
+        }
+      }
+    });
+  },
+  {
+  root: document.querySelector(".scrollable"), // 👈 important: scrollable container
+  threshold: 0.3, // 30% visible counts as active
+  }
+);
+
+// Observe all sections
+document.querySelectorAll("section[id]").forEach((section) =>
+  observer.observe(section)
+);
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  });
+});
 
 
 const projectOne = {
