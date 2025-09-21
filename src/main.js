@@ -20,13 +20,13 @@ function redirectScroll(e) {
     switch (e.key) {
       case "ArrowDown":
         scrollableColumn.scrollBy({ 
-          top: scrollableColumn.clientHeight * 0.8, 
+          top: scrollableColumn.clientHeight * 0.4, 
           behavior: "smooth" 
         });
         break;
       case "ArrowUp":
         scrollableColumn.scrollBy({ 
-          top: -scrollableColumn.clientHeight * 0.8, 
+          top: -scrollableColumn.clientHeight * 0.4, 
           behavior: "smooth" 
         });
         break;
@@ -70,29 +70,36 @@ const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
       const id = entry.target.getAttribute("id");
-      console.log(id);
       const link = document.querySelector(`a[href="#${id}"]`);
-      console.log(link);
+
       if (entry.isIntersecting && link) {
-        // reset all lines
+        // reset all links
         navLinks.forEach((a) => {
           const line = a.querySelector(".line");
-          line.classList.remove("w-16")
+          a.classList.remove("text-slate-800", "font-bold"); // reset text style
+          if (line) line.classList.remove("w-16"); // reset line
         });
 
-        // expand active one
+        // set active link
+        link.classList.add("text-slate-800", "font-bold"); // highlight text
         const activeLine = link.querySelector(".line");
         if (activeLine) {
-          activeLine.classList.add("w-16") // expanded
+          activeLine.classList.add("w-16"); // expand line
         }
       }
     });
   },
   {
-  root: document.querySelector(".scrollable"), // 👈 important: scrollable container
-  threshold: 0.3, // 30% visible counts as active
+    root: document.querySelector(".scrollable"), // scrollable container
+    threshold: 0.3, // 30% visible counts as active
   }
 );
+
+// Observe all sections
+document.querySelectorAll("section[id]").forEach((section) =>
+  observer.observe(section)
+);
+
 
 // Observe all sections
 document.querySelectorAll("section[id]").forEach((section) =>
