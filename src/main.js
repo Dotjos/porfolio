@@ -1,76 +1,78 @@
 const sections = document.querySelectorAll("section"); // sections with ids
 const navLinks = document.querySelectorAll("nav a");
 const scrollableColumn= document.querySelector(".scrollable")
+const cursorRing = document.getElementById('cursor-ring');
 
-function setupScrolling(){
-  if (window.innerWidth >= 1024) {
+//scroll of the scrollable right secrion of the page
+function redirectScroll(e) {
+  // Prevent body scroll
+  e.preventDefault();
 
-    document.body.style.overflow = 'hidden';
-
-    window.removeEventListener("wheel",handleWheel)
-    window.removeEventListener("keydown",handleKeydown)
-
-    window.addEventListener("wheel",handleWheel,{passive:false})
-    window.addEventListener("keydown",handleKeydown)    
-  } else {
-    document.body.style.overflow="auto"
-
-    window.removeEventListener("wheel",handleWheel)
-    window.removeEventListener("keydown",handleKeydown)
+  if (e.type === "wheel") {
+    // Smooth wheel scrolling
+    scrollableColumn.scrollBy({
+      top: e.deltaY,
+      behavior: "smooth"
+    });
   }
-}
 
-function handleWheel(){
-  window.addEventListener('wheel', function(e) {
-    e.preventDefault();
-    
-    // Get scroll direction and amount
-    const deltaY = e.deltaY;
-    
-    // Apply scroll to the scrollable column
-    scrollableColumn.scrollTop += deltaY;
-  });
-}
-function handleKeydown(){
-  window.addEventListener('keydown', function(e) {
-    const scrollAmount = 50;
-    
-    switch(e.key) {
-        case 'ArrowDown':
-            e.preventDefault();
-            scrollableColumn.scrollTop += scrollAmount;
-            break;
-        case 'ArrowUp':
-            e.preventDefault();
-            scrollableColumn.scrollTop -= scrollAmount;
-            break;
-        case 'PageDown':
-            e.preventDefault();
-            scrollableColumn.scrollTop += scrollableColumn.clientHeight * 0.8;
-            break;
-        case 'PageUp':
-            e.preventDefault();
-            scrollableColumn.scrollTop -= scrollableColumn.clientHeight * 0.8;
-            break;
-        case 'Home':
-            e.preventDefault();
-            scrollableColumn.scrollTop = 0;
-            break;
-        case 'End':
-            e.preventDefault();
-            scrollableColumn.scrollTop = scrollableColumn.scrollHeight;
-            break;
+  if (e.type === "keydown") {
+    switch (e.key) {
+      case "ArrowDown":
+        scrollableColumn.scrollBy({ 
+          top: scrollableColumn.clientHeight * 0.8, 
+          behavior: "smooth" 
+        });
+        break;
+      case "ArrowUp":
+        scrollableColumn.scrollBy({ 
+          top: -scrollableColumn.clientHeight * 0.8, 
+          behavior: "smooth" 
+        });
+        break;
+      case "PageDown":
+        scrollableColumn.scrollBy({ top: scrollableColumn.clientHeight * 0.8, behavior: "smooth" });
+        break;
+      case "PageUp":
+        scrollableColumn.scrollBy({ top: -scrollableColumn.clientHeight * 0.8, behavior: "smooth" });
+        break;
+      case "Home":
+        scrollableColumn.scrollTo({ top: 0, behavior: "smooth" });
+        break;
+      case "End":
+        scrollableColumn.scrollTo({ top: scrollableColumn.scrollHeight, behavior: "smooth" });
+        break;
     }
-  });
+  }
+  
 }
 
+// Attach global listeners
+window.addEventListener("wheel", redirectScroll, { passive: false });
+window.addEventListener("keydown", redirectScroll);
+
+// Adding the cursor-ring following effect
+let mouseX = 0;
+let mouseY = 0;
+let ringX = 0;
+let ringY = 0;
+
+const ringRect = window.getComputedStyle(cursorRing);
+const ringSize = parseInt(ringRect.width);
+const ringOffset = ringSize / 2;
+
+document.addEventListener('mousemove', (e) => {
+  cursorRing.style.left = (e.clientX - ringOffset) + "px";
+  cursorRing.style.top = (e.clientY - ringOffset) + "px";
+});
 
 const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
       const id = entry.target.getAttribute("id");
+      console.log(id);
       const link = document.querySelector(`a[href="#${id}"]`);
-
+      console.log(link);
       if (entry.isIntersecting && link) {
         // reset all lines
         navLinks.forEach((a) => {
@@ -189,11 +191,11 @@ function projectUpdate(parentSect, project) {
   githubRepoLink.href = gitHubRepo;
 
   txtLiveH1.innerHTML = `
-    <h1 class="text-sm"><span class="font-medium">Live URL:</span><a class="text-blue-600 italic" href=${liveLink} target="_blank">liveURL.com</a></h1>
+    <h1 class="text-sm"><span class="font-medium">Live URL:</span><a class="text-blue-600 hover:text-purple-400 italic" href=${liveLink} target="_blank">liveURL.com</a></h1>
   `;
 
   txtGithubH1.innerHTML = `
-    <h1 class="text-sm"><span class="font-medium">GitHub repo:</span><a class="text-blue-600 italic"  href=${gitHubRepo} target="_blank">Github.com</a></h1>
+    <h1 class="text-sm"><span class="font-medium">GitHub repo:</span><a class="text-blue-600 hover:text-purple-400 italic"  href=${gitHubRepo} target="_blank">Github.com</a></h1>
   `;
 
   const stackString = techStack.join();
