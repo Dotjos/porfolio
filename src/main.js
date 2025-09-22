@@ -22,7 +22,6 @@ function redirectScroll(e) {
 // Attach wheel listener
 window.addEventListener("wheel", redirectScroll, { passive: false });
 
-
 // --------------------
 // Continuous key scroll
 // --------------------
@@ -38,6 +37,7 @@ function step() {
 }
 
 window.addEventListener("keydown", (e) => {
+  if (window.innerWidth < 1024) return;  
   if (scrolling) return; // already scrolling
 
   switch (e.key) {
@@ -150,47 +150,104 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-
-
-const projectOne = {
-  imgSource: "./img/link-sharing-app.png",
-  projectTitle: "A LINK SHARING APP",
-  projectText:
-    "Users can bring all of their different works and projects that are hosted on different platforms to ONE PLACE and share them using ONE LINK by using this link sharing app, which is a full-stack application.",
-  liveLink: "https://link-sharing-app-delta.vercel.app/",
-  gitHubRepo: "https://github.com/Dotjos/link-sharing-app",
-  techStack: ["React","Tailwind CSS","Supabase"],
-};
-
-const projecTwo = {
-  imgSource: "./img/Multi-conf.jpg",
+//refactor project upload
+const Products=[
+  {
+    imgSource: "./img/Audiophile.png",
+    projectTitle: "AN E-COMMERCE APP",
+    projectText:
+      "I built the Audiophile e-commerce site to deliver a premium shopping experience that reflects the sophistication of high-end audio products. The result is a platform that not only sells audio gear but also conveys the lifestyle and prestige of exceptional sound..",
+    liveLink: "https://audiophile-ecommerce-2qc9.vercel.app/",
+    gitHubRepo: "https://github.com/Dotjos/audiophile-ecommerce",
+    techStack: ["Next.js","Tailwind CSS"],
+  },
+  { 
+      imgSource: "./img/link-sharing-app.png",
+      projectTitle: "A LINK SHARING APP",
+      projectText:
+        "Users can bring all of their different works and projects that are hosted on different platforms to ONE PLACE and share them using ONE LINK by using this link sharing app, which is a full-stack application.",
+      liveLink: "https://link-sharing-app-delta.vercel.app/",
+      gitHubRepo: "https://github.com/Dotjos/link-sharing-app",
+      techStack: ["React","Tailwind CSS","Supabase"],
+  },
+  {
+    imgSource: "./img/Multi-conf.jpg",
   projectTitle: "A MULTI STEP FORM",
   projectText:
     "The multi step form, as its name implies, is a web app that  guides you through numerous steps of filling out, deciding on, and picking different plans that fit and satisfy your needs.It's a challenge from frontend mentors.",
   liveLink: "https://multiple-conf.vercel.app/",
   gitHubRepo: "https://github.com/Dotjos/multiple-conf",
   techStack: ["HTML", "Tailwind CSS", "JavaScript"],
-};
-
-const projecThree = {
-  imgSource: "./img/Location.jpg",
-  projectTitle: "IP ADDRESS GENERATOR",
-  projectText:
-    "This web app simplifies the task of retrieving your device's IP address and related network information,With just a click, you can access valuable data about your location and other related informations, whether you're using it for personal or professional reasons.",
-  liveLink: "https://ip-adress-tracker-plum.vercel.app/",
-  gitHubRepo: "https://github.com/Dotjos/IP-ADRESS-TRACKER",
-  techStack: ["HTML", "Tailwind CSS", "JavaScript"],
-};
-
-const projectFour = {
-  imgSource: "./img/Flag.jpg",
+  },
+  {
+      imgSource: "./img/Location.jpg",
+      projectTitle: "IP ADDRESS GENERATOR",
+      projectText:
+        "This web app simplifies the task of retrieving your device's IP address and related network information,With just a click, you can access valuable data about your location and other related informations, whether you're using it for personal or professional reasons.",
+      liveLink: "https://ip-adress-tracker-plum.vercel.app/",
+      gitHubRepo: "https://github.com/Dotjos/IP-ADRESS-TRACKER",
+      techStack: ["HTML", "Tailwind CSS", "JavaScript"],
+  },
+  {
+    imgSource: "./img/Flag.jpg",
   projectTitle: "COUNTRICTIONARY",
   projectText:
     "This web app is designed for discovering fascinating facts and information about countries from around the world.This app makes it possible to  explore the globe, filter the various countries of the world by region , discover bordering nations among other features just by clicking on various visual buttons displayed on the screen.",
   liveLink: "https://rest-countries-api-five-pearl.vercel.app/",
   gitHubRepo: "https://github.com/Dotjos/rest-countries-api",
   techStack: ["HTML", "Tailwind CSS", "JavaScript"],
-};
+  }
+]
+
+// const projectOne = {
+//   imgSource: "./img/Audiophile.png",
+//   projectTitle: "AN E-COMMERCE APP",
+//   projectText:
+//     "I built the Audiophile e-commerce site to deliver a premium shopping experience that reflects the sophistication of high-end audio products. The result is a platform that not only sells audio gear but also conveys the lifestyle and prestige of exceptional sound..",
+//   liveLink: "https://audiophile-ecommerce-2qc9.vercel.app/",
+//   gitHubRepo: "https://github.com/Dotjos/audiophile-ecommerce",
+//   techStack: ["Next.js","Tailwind CSS"],
+// };
+
+// const projecTwo = {
+//   imgSource: "./img/link-sharing-app.png",
+//   projectTitle: "A LINK SHARING APP",
+//   projectText:
+//     "Users can bring all of their different works and projects that are hosted on different platforms to ONE PLACE and share them using ONE LINK by using this link sharing app, which is a full-stack application.",
+//   liveLink: "https://link-sharing-app-delta.vercel.app/",
+//   gitHubRepo: "https://github.com/Dotjos/link-sharing-app",
+//   techStack: ["React","Tailwind CSS","Supabase"],
+// };
+
+// const projecThree = {
+//   imgSource: "./img/Multi-conf.jpg",
+//   projectTitle: "A MULTI STEP FORM",
+//   projectText:
+//     "The multi step form, as its name implies, is a web app that  guides you through numerous steps of filling out, deciding on, and picking different plans that fit and satisfy your needs.It's a challenge from frontend mentors.",
+//   liveLink: "https://multiple-conf.vercel.app/",
+//   gitHubRepo: "https://github.com/Dotjos/multiple-conf",
+//   techStack: ["HTML", "Tailwind CSS", "JavaScript"],
+// };
+
+// const projectFour = {
+//   imgSource: "./img/Location.jpg",
+//   projectTitle: "IP ADDRESS GENERATOR",
+//   projectText:
+//     "This web app simplifies the task of retrieving your device's IP address and related network information,With just a click, you can access valuable data about your location and other related informations, whether you're using it for personal or professional reasons.",
+//   liveLink: "https://ip-adress-tracker-plum.vercel.app/",
+//   gitHubRepo: "https://github.com/Dotjos/IP-ADRESS-TRACKER",
+//   techStack: ["HTML", "Tailwind CSS", "JavaScript"],
+// };
+
+// const projectFive = {
+//   imgSource: "./img/Flag.jpg",
+//   projectTitle: "COUNTRICTIONARY",
+//   projectText:
+//     "This web app is designed for discovering fascinating facts and information about countries from around the world.This app makes it possible to  explore the globe, filter the various countries of the world by region , discover bordering nations among other features just by clicking on various visual buttons displayed on the screen.",
+//   liveLink: "https://rest-countries-api-five-pearl.vercel.app/",
+//   gitHubRepo: "https://github.com/Dotjos/rest-countries-api",
+//   techStack: ["HTML", "Tailwind CSS", "JavaScript"],
+// };
 
 function projectUpdate(parentSect, project) {
   const {
@@ -238,7 +295,7 @@ function projectUpdate(parentSect, project) {
 
   const stackString = techStack.join();
   txtStackH1.innerHTML = `
-    <h1 class="text-sm ><span class="font-medium">Tech stack:</span><span">${stackString}.</span></h1>
+    <h1 class="text-sm"> <span class="font-medium">Tech stack:</span> <span>${stackString}.</span></h1>
   `;
 
   // Add CSS classes
@@ -274,15 +331,14 @@ function projectUpdate(parentSect, project) {
   txtDiv.appendChild(txtStackDiv);
   productDiv.appendChild(imgDiv);
   productDiv.appendChild(txtDiv);
+
   parentSect.appendChild(productDiv);
 }
 
 document.addEventListener("DOMContentLoaded", function () {
   const projectSect = document.querySelector(".project");
-  projectUpdate(projectSect, projectOne);
-  projectUpdate(projectSect, projecTwo);
-  projectUpdate(projectSect, projecThree);
-  projectUpdate(projectSect, projectFour);
+  Products.forEach(project => projectUpdate(projectSect, project));
+
 });
 
 // ========================
@@ -303,7 +359,6 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   }
 });
-
 
 
 window.onload = function () {
