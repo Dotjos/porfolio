@@ -3,56 +3,79 @@ const navLinks = document.querySelectorAll("nav a");
 const scrollableColumn= document.querySelector(".scrollable")
 const cursorRing = document.getElementById('cursor-ring');
 
+
 //scroll of the scrollable right secrion of the page
 function redirectScroll(e) {
   // Only apply custom scroll on desktop screens
-  if (window.innerWidth < 1024) return; 
-
-  // Prevent body scroll
-  e.preventDefault();
+  if (window.innerWidth < 1024) return;
 
   if (e.type === "wheel") {
+    e.preventDefault(); // block body scroll
     // Smooth wheel scrolling
     scrollableColumn.scrollBy({
       top: e.deltaY,
       behavior: "smooth"
     });
   }
-
-  if (e.type === "keydown") {
-    switch (e.key) {
-      case "ArrowDown":
-        scrollableColumn.scrollBy({ 
-          top: scrollableColumn.clientHeight * 0.4, 
-          behavior: "smooth" 
-        });
-        break;
-      case "ArrowUp":
-        scrollableColumn.scrollBy({ 
-          top: -scrollableColumn.clientHeight * 0.4, 
-          behavior: "smooth" 
-        });
-        break;
-      case "PageDown":
-        scrollableColumn.scrollBy({ top: scrollableColumn.clientHeight * 0.8, behavior: "smooth" });
-        break;
-      case "PageUp":
-        scrollableColumn.scrollBy({ top: -scrollableColumn.clientHeight * 0.8, behavior: "smooth" });
-        break;
-      case "Home":
-        scrollableColumn.scrollTo({ top: 0, behavior: "smooth" });
-        break;
-      case "End":
-        scrollableColumn.scrollTo({ top: scrollableColumn.scrollHeight, behavior: "smooth" });
-        break;
-    }
-  }
-  
 }
 
-// Attach global listeners
+// Attach wheel listener
 window.addEventListener("wheel", redirectScroll, { passive: false });
-window.addEventListener("keydown", redirectScroll);
+
+
+// --------------------
+// Continuous key scroll
+// --------------------
+let scrolling = false;
+let scrollDirection = 0;
+let scrollSpeed = 20; // px per frame, tweak to taste
+
+function step() {
+  if (scrolling && scrollDirection !== 0) {
+    scrollableColumn.scrollBy({ top: scrollDirection * scrollSpeed, behavior: "auto" });
+    requestAnimationFrame(step);
+  }
+}
+
+window.addEventListener("keydown", (e) => {
+  if (scrolling) return; // already scrolling
+
+  switch (e.key) {
+    case "ArrowDown":
+    case "PageDown":
+      e.preventDefault();
+      scrollDirection = 1;
+      scrolling = true;
+      requestAnimationFrame(step);
+      break;
+
+    case "ArrowUp":
+    case "PageUp":
+      e.preventDefault();
+      scrollDirection = -1;
+      scrolling = true;
+      requestAnimationFrame(step);
+      break;
+
+    case "Home":
+      e.preventDefault();
+      scrollableColumn.scrollTo({ top: 0, behavior: "smooth" });
+      break;
+
+    case "End":
+      e.preventDefault();
+      scrollableColumn.scrollTo({ top: scrollableColumn.scrollHeight, behavior: "smooth" });
+      break;
+  }
+});
+
+window.addEventListener("keyup", (e) => {
+  if (["ArrowDown", "PageDown", "ArrowUp", "PageUp"].includes(e.key)) {
+    scrolling = false;
+    scrollDirection = 0;
+  }
+});
+
 
 // Adding the cursor-ring following effect
 let mouseX = 0;
@@ -228,12 +251,12 @@ function projectUpdate(parentSect, project) {
     "md:gap-5",
     "project",
     "w-full",
-    // "hover:border"
+    "lg:my-0",
   );
 
   imgEl.classList.add("w-full","h-full");
   imgDiv.classList.add("h-30","lg:h-20","w-50","md:w-1/3","border-2","overflow-hidden", "rounded-md","border-gray-100","project-image","transition-all","duration-300")
-  txtDescDiv.classList.add("text-sm","my-2","lg:my-0","text-justify");
+  txtDescDiv.classList.add("text-sm","my-2","dark:text-slate-400","lg:my-1","text-justify");
   txtNameH1.classList.add("font-semibold","text-lg");
   txtDiv.classList.add("w-fit")
 
