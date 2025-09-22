@@ -22,7 +22,6 @@ function redirectScroll(e) {
 // Attach wheel listener
 window.addEventListener("wheel", redirectScroll, { passive: false });
 
-
 // --------------------
 // Continuous key scroll
 // --------------------
@@ -38,6 +37,7 @@ function step() {
 }
 
 window.addEventListener("keydown", (e) => {
+  if (window.innerWidth < 1024) return;  
   if (scrolling) return; // already scrolling
 
   switch (e.key) {
