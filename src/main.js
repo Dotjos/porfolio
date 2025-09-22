@@ -79,12 +79,13 @@ const observer = new IntersectionObserver(
         // reset all links
         navLinks.forEach((a) => {
           const line = a.querySelector(".line");
-          a.classList.remove("text-slate-800", "font-bold"); // reset text style
+          a.classList.remove("text-slate-800","dark:text-slate-100")
+            link.classList.add("text-slate-800","font-bold"); // reset text style
           if (line) line.classList.remove("w-16"); // reset line
         });
 
         // set active link
-        link.classList.add("text-slate-800", "font-bold"); // highlight text
+        link.classList.add("text-slate-800","dark:text-slate-100", "font-bold"); // highlight text
         const activeLine = link.querySelector(".line");
         if (activeLine) {
           activeLine.classList.add("w-16"); // expand line
@@ -264,33 +265,6 @@ document.addEventListener("DOMContentLoaded", function () {
 // ========================
 // Handle hash on page load
 // ========================
-// window.addEventListener("load", () => {
-//   const hash = window.location.hash;
-//   if (hash) {
-//     const target = document.querySelector(hash);
-//     if (target) {
-//       scrollableColumn.scrollTo({
-//         top: target.offsetTop,
-//         behavior: "smooth" // instant jump
-//       });
-//     }
-//   }
-// });
-
-// window.addEventListener("load", () => {
-//   const hash = window.location.hash;
-//   if (hash) {
-//     setTimeout(() => {
-//       const target = document.querySelector(hash);
-//       if (target) {
-//         scrollableColumn.scrollTo({
-//           top: target.offsetTop,
-//           behavior: "smooth"
-//         });
-//       }
-//     }, 50); // small delay works better on mobile
-//   }
-// });
 
 window.addEventListener("DOMContentLoaded", () => {
   const hash = window.location.hash;
