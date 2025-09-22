@@ -5,6 +5,9 @@ const cursorRing = document.getElementById('cursor-ring');
 
 //scroll of the scrollable right secrion of the page
 function redirectScroll(e) {
+  // Only apply custom scroll on desktop screens
+  if (window.innerWidth < 1024) return; 
+
   // Prevent body scroll
   e.preventDefault();
 
@@ -101,24 +104,28 @@ document.querySelectorAll("section[id]").forEach((section) =>
 );
 
 
-// Observe all sections
-document.querySelectorAll("section[id]").forEach((section) =>
-  observer.observe(section)
-);
-
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     e.preventDefault();
-    
-    const target = document.querySelector(this.getAttribute('href'));
+
+    const href = this.getAttribute('href'); // e.g. "#about"
+    const target = document.querySelector(href);
+
     if (target) {
-      target.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
+      // Scroll the custom scrollable column
+      const scrollable = document.querySelector(".scrollable");
+      scrollable.scrollTo({
+        top: target.offsetTop,
+        behavior: 'smooth'
       });
+
+      // Update URL hash properly
+      const id = href.substring(1); // remove "#"
+      history.pushState(null, "", `#${id}`);
     }
   });
 });
+
 
 
 const projectOne = {
@@ -254,6 +261,54 @@ document.addEventListener("DOMContentLoaded", function () {
   projectUpdate(projectSect, projectFour);
 });
 
+// ========================
+// Handle hash on page load
+// ========================
+// window.addEventListener("load", () => {
+//   const hash = window.location.hash;
+//   if (hash) {
+//     const target = document.querySelector(hash);
+//     if (target) {
+//       scrollableColumn.scrollTo({
+//         top: target.offsetTop,
+//         behavior: "smooth" // instant jump
+//       });
+//     }
+//   }
+// });
+
+// window.addEventListener("load", () => {
+//   const hash = window.location.hash;
+//   if (hash) {
+//     setTimeout(() => {
+//       const target = document.querySelector(hash);
+//       if (target) {
+//         scrollableColumn.scrollTo({
+//           top: target.offsetTop,
+//           behavior: "smooth"
+//         });
+//       }
+//     }, 50); // small delay works better on mobile
+//   }
+// });
+
+window.addEventListener("DOMContentLoaded", () => {
+  const hash = window.location.hash;
+  if (hash) {
+    const target = document.querySelector(hash);
+    if (target) {
+      requestAnimationFrame(() => {
+        scrollableColumn.scrollTo({
+          top: target.offsetTop,
+          behavior: "smooth"
+        });
+      });
+    }
+  }
+});
+
+
+
 window.onload = function () {
   const projects = document.querySelectorAll(".project");
   const projectImages = document.querySelectorAll(".project-image");
@@ -275,7 +330,7 @@ window.onload = function () {
         entry.target.classList.add("border-gray-300", "shadow-lg");
       } else {
         // Revert to original border when image goes out of view
-        entry.target.classList.remove("border-red-300", "shadow-lg");
+        entry.target.classList.remove("border-gray-300", "shadow-lg");
         entry.target.classList.add("border-gray-100");
       }
     });
