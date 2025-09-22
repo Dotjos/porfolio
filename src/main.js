@@ -159,7 +159,7 @@ const Products=[
       "I built the Audiophile e-commerce site to deliver a premium shopping experience that reflects the sophistication of high-end audio products. The result is a platform that not only sells audio gear but also conveys the lifestyle and prestige of exceptional sound..",
     liveLink: "https://audiophile-ecommerce-2qc9.vercel.app/",
     gitHubRepo: "https://github.com/Dotjos/audiophile-ecommerce",
-    techStack: ["Next.js","Tailwind CSS"],
+    techStack: ["Tailwind CSS","Typescript","Next.js"],
   },
   { 
       imgSource: "./img/link-sharing-app.png",
