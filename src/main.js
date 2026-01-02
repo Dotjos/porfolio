@@ -1,6 +1,6 @@
 const sections = document.querySelectorAll("section"); // sections with ids
 const navLinks = document.querySelectorAll("nav a");
-const scrollableColumn= document.querySelector(".scrollable")
+const scrollableColumn = document.querySelector(".scrollable")
 const cursorRing = document.getElementById('cursor-ring');
 
 
@@ -37,7 +37,7 @@ function step() {
 }
 
 window.addEventListener("keydown", (e) => {
-  if (window.innerWidth < 1024) return;  
+  if (window.innerWidth < 1024) return;
   if (scrolling) return; // already scrolling
 
   switch (e.key) {
@@ -83,8 +83,7 @@ let mouseY = 0;
 let ringX = 0;
 let ringY = 0;
 
-const ringRect = window.getComputedStyle(cursorRing);
-const ringSize = parseInt(ringRect.width);
+const ringSize = 100; // Fixed size from CSS
 const ringOffset = ringSize / 2;
 
 document.addEventListener('mousemove', (e) => {
@@ -102,13 +101,13 @@ const observer = new IntersectionObserver(
         // reset all links
         navLinks.forEach((a) => {
           const line = a.querySelector(".line");
-          a.classList.remove("text-slate-800","dark:text-slate-100")
-            link.classList.add("text-slate-800","font-bold"); // reset text style
+          a.classList.remove("text-slate-800", "dark:text-slate-100")
+          link.classList.add("text-slate-800", "font-bold"); // reset text style
           if (line) line.classList.remove("w-16"); // reset line
         });
 
         // set active link
-        link.classList.add("text-slate-800","dark:text-slate-100", "font-bold"); // highlight text
+        link.classList.add("text-slate-800", "dark:text-slate-100", "font-bold"); // highlight text
         const activeLine = link.querySelector(".line");
         if (activeLine) {
           activeLine.classList.add("w-16"); // expand line
@@ -151,7 +150,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 //refactor project upload
-const Products=[
+const Products = [
   {
     imgSource: "./img/Audiophile.png",
     projectTitle: "E-COMMERCE APP",
@@ -159,24 +158,24 @@ const Products=[
       "I built the Audiophile e-commerce site to deliver a premium shopping experience that reflects the sophistication of high-end audio products. The result is a platform that not only sells audio gear but also conveys the lifestyle and prestige of exceptional sound..",
     liveLink: "https://audiophile-ecommerce-2qc9.vercel.app/",
     gitHubRepo: "https://github.com/Dotjos/audiophile-ecommerce",
-    techStack: ["Tailwind CSS","Typescript","Next.js"],
+    techStack: ["Tailwind CSS", "Typescript", "Next.js"],
   },
-  { 
-      imgSource: "./img/Advice_Generator.png",
-      projectTitle: "ADVICE GENERATOR APP",
-      projectText:"This Advice Generator app gives you a new piece of advice with each click in a clean, minimal interface. It uses JavaScript to fetch advice dynamically, keeping the experience smooth and easy to use. The focus is on delivering quick, simple insights without distractions.",
-      liveLink: "https://advice-generator-omega-ten.vercel.app/",
-      gitHubRepo: "https://github.com/Dotjos/Advice-generator",
-      techStack: ["HTML","Tailwind CSS","Javascript"],
+  {
+    imgSource: "./img/Advice_Generator.png",
+    projectTitle: "ADVICE GENERATOR APP",
+    projectText: "This Advice Generator app gives you a new piece of advice with each click in a clean, minimal interface. It uses JavaScript to fetch advice dynamically, keeping the experience smooth and easy to use. The focus is on delivering quick, simple insights without distractions.",
+    liveLink: "https://advice-generator-omega-ten.vercel.app/",
+    gitHubRepo: "https://github.com/Dotjos/Advice-generator",
+    techStack: ["HTML", "Tailwind CSS", "Javascript"],
   },
   {
     imgSource: "./img/Multi-conf.jpg",
-  projectTitle: "A MULTI STEP FORM",
-  projectText:
-    "The multi step form, as its name implies, is a web app that  guides you through numerous steps of filling out, deciding on, and picking different plans that fit and satisfy your needs.It's a challenge from frontend mentors.",
-  liveLink: "https://multiple-conf.vercel.app/",
-  gitHubRepo: "https://github.com/Dotjos/multiple-conf",
-  techStack: ["HTML", "Tailwind CSS", "JavaScript"],
+    projectTitle: "A MULTI STEP FORM",
+    projectText:
+      "The multi step form, as its name implies, is a web app that  guides you through numerous steps of filling out, deciding on, and picking different plans that fit and satisfy your needs.It's a challenge from frontend mentors.",
+    liveLink: "https://multiple-conf.vercel.app/",
+    gitHubRepo: "https://github.com/Dotjos/multiple-conf",
+    techStack: ["HTML", "Tailwind CSS", "JavaScript"],
   },
   // { 
   //     imgSource: "./img/link-sharing-app.png",
@@ -218,78 +217,43 @@ function projectUpdate(parentSect, project) {
     techStack,
   } = project;
 
-  // Create DOM elements
   const productDiv = document.createElement("div");
-  const imgDiv = document.createElement("div");
-  const imgEl = document.createElement("img");
-  const txtDiv = document.createElement("div");
-  const txtNameDiv = document.createElement("div");
-  const txtNameH1 = document.createElement("h1");
-  const txtDescDiv = document.createElement("div");
-  const txtDescPara = document.createElement("p");
-  const txtLiveDiv = document.createElement("div");
-  const txtLiveH1 = document.createElement("h1");
-  const liveLinkEl = document.createElement("a");
-  const txtGithubDiv = document.createElement("div");
-  const txtGithubH1 = document.createElement("h1");
-  const githubRepoLink = document.createElement("a");
-  const txtStackDiv = document.createElement("div");
-  const txtStackH1 = document.createElement("h1");
-
-  // Set content and attributes
-  imgEl.src = imgSource;
-  imgEl.loading = "lazy";
-  txtNameH1.textContent = projectTitle;
-  txtDescPara.textContent = projectText;
-  liveLinkEl.href = liveLink;
-  githubRepoLink.href = gitHubRepo;
-
-  txtLiveH1.innerHTML = `
-    <h1 class="text-sm"><span class="font-medium">Live URL:</span><a class="text-blue-600 hover:text-purple-400 italic" href=${liveLink} target="_blank">liveURL.com</a></h1>
-  `;
-
-  txtGithubH1.innerHTML = `
-    <h1 class="text-sm"><span class="font-medium">GitHub repo:</span><a class="text-blue-600 hover:text-purple-400 italic"  href=${gitHubRepo} target="_blank">Github.com</a></h1>
-  `;
-
-  const stackString = techStack.join();
-  txtStackH1.innerHTML = `
-    <h1 class="text-sm"> <span class="font-medium">Tech stack:</span> <span>${stackString}.</span></h1>
-  `;
-
-  // Add CSS classes
   productDiv.classList.add(
-    "my-3",
-    "flex",
-    "gap-7",
-    "flex-col",
-    "md:flex-row",
-    "md:gap-5",
-    "project",
-    "w-full",
-    "lg:my-0",
+    "my-3", "flex", "gap-7", "flex-col", "md:flex-row",
+    "md:gap-5", "project", "w-full", "lg:my-0"
   );
 
-  imgEl.classList.add("w-full","h-full");
-  imgDiv.classList.add("h-30","lg:h-20","w-50","md:w-1/3","border-2","overflow-hidden", "rounded-md","border-gray-100","project-image","transition-all","duration-300")
-  txtDescDiv.classList.add("text-sm","my-2","dark:text-slate-400","lg:my-1","text-justify");
-  txtNameH1.classList.add("font-semibold","text-lg");
-  txtDiv.classList.add("w-fit")
+  const stackString = techStack.join(", ");
 
-  // Append elements
-  imgDiv.appendChild(imgEl);
-  txtNameDiv.appendChild(txtNameH1);
-  txtDescDiv.appendChild(txtDescPara);
-  txtLiveDiv.appendChild(txtLiveH1);
-  txtGithubDiv.appendChild(txtGithubH1);
-  txtStackDiv.appendChild(txtStackH1);
-  txtDiv.appendChild(txtNameDiv);
-  txtDiv.appendChild(txtDescDiv);
-  txtDiv.appendChild(txtLiveDiv);
-  txtDiv.appendChild(txtGithubDiv);
-  txtDiv.appendChild(txtStackDiv);
-  productDiv.appendChild(imgDiv);
-  productDiv.appendChild(txtDiv);
+  productDiv.innerHTML = `
+    <div class="h-30 lg:h-20 w-50 md:w-1/3 border-2 overflow-hidden rounded-md border-gray-100 project-image transition-all duration-300">
+      <img src="${imgSource}" loading="lazy" class="w-full h-full" alt="${projectTitle}">
+    </div>
+    <div class="w-fit">
+      <div><h1 class="font-semibold text-lg">${projectTitle}</h1></div>
+      <div class="text-sm my-2 dark:text-slate-400 lg:my-1 text-justify">
+        <p>${projectText}</p>
+      </div>
+      <div>
+        <h1 class="text-sm">
+          <span class="font-medium">Live URL:</span>
+          <a class="text-blue-600 hover:text-purple-400 italic" href="${liveLink}" target="_blank">liveURL.com</a>
+        </h1>
+      </div>
+      <div>
+        <h1 class="text-sm">
+          <span class="font-medium">GitHub repo:</span>
+          <a class="text-blue-600 hover:text-purple-400 italic" href="${gitHubRepo}" target="_blank">Github.com</a>
+        </h1>
+      </div>
+      <div>
+        <h1 class="text-sm">
+          <span class="font-medium">Tech stack:</span>
+          <span>${stackString}.</span>
+        </h1>
+      </div>
+    </div>
+  `;
 
   parentSect.appendChild(productDiv);
 }
@@ -323,7 +287,7 @@ window.addEventListener("DOMContentLoaded", () => {
 window.onload = function () {
   const projects = document.querySelectorAll(".project");
   const projectImages = document.querySelectorAll(".project-image");
-  
+
   // Observer for project fade-in animation
   const projectObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
