@@ -164,7 +164,7 @@ const Products = [
     imgSource: "./img/zentry.png",
     projectTitle: "ZENTRY LANDING PAGE REMAKE",
     projectText:
-      "I built a complete remake of the Zentry gaming platform using Next.js and TypeScript, recreating their vision of a Metagame Layer that unifies gaming experiences across multiple platforms,with modern animation and responsive design.",
+      "I built a complete remake of the Zentry gaming platform landing page using Next.js and TypeScript, recreating their vision of a Metagame Layer that unifies gaming experiences across multiple platforms with modern animation and responsive design.",
     liveLink: "https://zenkit-gamma.vercel.app/",
     gitHubRepo: "https://github.com/Dotjos/zenkit",
     techStack: ["Typescript", "Next.js", "Tailwind CSS", "GSAP"],
